@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>T-Goda | Grand Azure Resort & Spa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script>window.TGODA_GOOGLE_API_KEY = 'YAIzaSyDoyHlnphzfK405yh7Ws1tLUR2Nt5JsYJk';</script>
+  <script src="tgoda-utils.js" defer></script>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <div style="display:flex;align-items:center;gap:2rem;">
+      <a href="index.html" class="logo">T-Goda</a>
+      <nav class="nav-tabs">
+        <button class="nav-tab active" onclick="setTab(this)">Hotels</button>
+        <button class="nav-tab" onclick="actionAlert('แท็บเที่ยวบินกำลังมาเร็วๆ นี้!')">Flights</button>
+        <button class="nav-tab" onclick="actionAlert('แพ็คเกจที่พักพร้อมเที่ยวบินเร็วๆ นี้!')">Bundles</button>
+        <button class="nav-tab" onclick="actionAlert('กิจกรรมท่องเที่ยวรอบโลกกำลังปรับปรุงระบบ')">Activities</button>
+      </nav>
+    </div>
+    <div class="nav-right">
+      <button class="btn-signin" onclick="openSignIn()">Sign In</button>
+      <button class="btn btn-primary btn-sm" onclick="openSignIn()">Create Account</button>
+    </div>
+  </div>
+</header>
+
+<div class="container breadcrumb-section">
+  <div class="breadcrumb">
+    <a href="index.html">Home</a><span class="sep">›</span>
+    <a href="index.html" onclick="history.back()">Greece</a><span class="sep">›</span>
+    <a href="crete-hotels.html" onclick="history.back()">Crete Hotels</a><span class="sep">›</span>
+    <span class="current">Grand Azure Resort & Spa</span>
+  </div>
+  <div class="hotel-header">
+    <div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+        <div class="stars" style="color:#F59E0B;font-size:1rem;">★★★★★</div>
+        <span class="badge badge-primary">LUXURY</span>
+      </div>
+      <h1 class="hotel-name">Grand Azure Resort & Spa, Elounda</h1>
+      <div class="hotel-location-detail">
+        <span>📍</span>
+        <span>Elounda Bay, Crete, 72053, Greece</span>
+        <a href="https://www.google.com/maps/search/Grand+Azure+Resort+Elounda+Crete" target="_blank" rel="noopener">Show on map</a>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-outline btn-sm" onclick="actionAlert('คัดลอกลิงก์โรงแรมเรียบร้อยแล้ว!')">🔗 Share</button>
+      <button class="btn btn-outline btn-sm" id="saveBtn" onclick="toggleSave()">♡ Save</button>
+      <button class="btn btn-red btn-sm" onclick="scrollToRooms()">Book Now</button>
+    </div>
+  </div>
+</div>
+
+<div class="container gallery">
+  <div class="gallery-grid">
+    <div class="gallery-item gallery-main" onclick="openLightbox(0)">
+      <img src="img/gallery-main.png" alt="Resort pool" />
+    </div>
+    <div class="gallery-item" onclick="openLightbox(1)">
+      <img src="img/gallery-aerial.png" alt="Aerial view" />
+    </div>
+    <div class="gallery-item" onclick="openLightbox(2)">
+      <img src="img/gallery-spa.png" alt="Spa" />
+    </div>
+    <div class="gallery-item" onclick="openLightbox(3)">
+      <img src="https://media.base44.com/images/public/69ec32306fa4eea2ead80a1b/335806337_generated_c2f2db0d.png" alt="Restaurant" />
+    </div>
+    <div class="gallery-item" onclick="openLightbox(4)">
+      <img src="https://media.base44.com/images/public/69ec32306fa4eea2ead80a1b/8f919a8f9_generated_173130f1.png" alt="Beach" />
+      <div class="gallery-overlay">📷 +2 photos</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="overview-grid">
+
+    <div>
+      <h2 class="section-title">Overview</h2>
+      <p class="overview-text">
+        Experience unparalleled luxury at the Grand Azure Resort & Spa, nestled on the pristine shores of Elounda Bay.
+        This architectural masterpiece blends traditional Cretan charm with ultra-modern design, offering guests
+        breathtaking panoramic views of the Mediterranean Sea. Whether you're seeking a romantic getaway or a
+        rejuvenation retreat, our world-class amenities and personalized service ensure a stay that transcends the ordinary.
+      </p>
+
+      <p class="amenities-title">Popular Amenities</p>
+      <div class="amenities-grid-detail">
+        <div class="amenity-item"><span class="amenity-icon">🏊</span> 3 Outdoor Pools</div>
+        <div class="amenity-item"><span class="amenity-icon">💆</span> Full-service Spa</div>
+        <div class="amenity-item"><span class="amenity-icon">🍽️</span> 5 Restaurants</div>
+        <div class="amenity-item"><span class="amenity-icon">🏋️</span> Gym & Fitness</div>
+        <div class="amenity-item"><span class="amenity-icon">📶</span> Free High-speed Wi-Fi</div>
+        <div class="amenity-item"><span class="amenity-icon">🏖️</span> Private Beach</div>
+      </div>
+      <button class="show-more-btn" onclick="toggleAmenities()">
+        <span id="amenitiesToggleText">See all 45 amenities</span> <span id="amenitiesArrow">▾</span>
+      </button>
+      <div class="extra-amenities" id="extraAmenities">
+        <span>• Concierge</span><span>• Room Service</span><span>• Valet Parking</span>
+        <span>• Tennis Courts</span><span>• Kids Club</span><span>• Water Sports</span>
+        <span>• Yoga Classes</span><span>• Wine Cellar</span><span>• Business Center</span>
+        <span>• Airport Transfer</span><span>• Laundry Service</span><span>• Heated Pool</span>
+      </div>
+    </div>
+
+    <div class="rating-card" style="height:fit-content;">
+      <div class="rating-header">
+        <div>
+          <p class="rating-label">Excellent</p>
+          <p class="rating-sub">1,248 verified reviews</p>
+        </div>
+        <div class="rating-score">9.2</div>
+      </div>
+      <div class="rating-bars">
+        <div class="rating-row">
+          <div class="rating-row-header">
+            <span style="color:var(--muted);font-size:.8rem;">Cleanliness</span>
+            <span style="font-weight:600;font-size:.8rem;">9.5</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:95%"></div></div>
+        </div>
+        <div class="rating-row">
+          <div class="rating-row-header">
+            <span style="color:var(--muted);font-size:.8rem;">Service</span>
+            <span style="font-weight:600;font-size:.8rem;">9.2</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:92%"></div></div>
+        </div>
+        <div class="rating-row">
+          <div class="rating-row-header">
+            <span style="color:var(--muted);font-size:.8rem;">Location</span>
+            <span style="font-weight:600;font-size:.8rem;">8.9</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:89%"></div></div>
+        </div>
+        <div class="rating-row">
+          <div class="rating-row-header">
+            <span style="color:var(--muted);font-size:.8rem;">Value</span>
+            <span style="font-weight:600;font-size:.8rem;">8.7</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:87%"></div></div>
+        </div>
+      </div>
+      <div class="map-preview" id="hotelMapContainer" style="height:180px;border-radius:10px;overflow:hidden;cursor:default;">
+        <div style="height:100%;background:linear-gradient(135deg,#cce4f7,#a8d5e2);display:flex;align-items:center;justify-content:center;color:#555;font-size:.85rem;">Loading map…</div>
+      </div>
+      <div class="map-info">
+        <p>Near Spinalonga Island</p>
+        <span>15 min walk to city center</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="container rooms-section" id="roomsSection">
+  <h2 class="section-title">Select Your Room</h2>
+
+  <!-- Date picker bar for room pricing -->
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding:14px 16px;background:#f9fafb;border-radius:10px;border:1px solid #e5e7eb;flex-wrap:wrap;">
+    <span style="font-size:.85rem;color:#6b7280;">📅 Your stay:</span>
+    <div id="hotelDateField" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:8px 14px;background:#fff;border:1.5px solid #e5e7eb;border-radius:8px;font-size:.875rem;font-weight:600;color:#111827;transition:border-color .15s;">
+      <span>📅</span>
+      <span id="hotelDateDisplay">Oct 12 – Oct 19 · 7 nights</span>
+      <span style="color:#9ca3af;font-size:.7rem;">▾</span>
+    </div>
+    <span style="font-size:.8rem;color:#6b7280;" id="hotelNightLabel"></span>
+  </div>
+  <div class="table-header">
+    <div>Room Type</div>
+    <div>Sleeps</div>
+    <div>Today's Price</div>
+    <div>Options</div>
+    <div></div>
+  </div>
+  <div class="rooms-list">
+
+    <div class="room-row" id="room-1">
+      <div>
+        <div class="room-name-detail">
+          Presidential Sea Front Suite
+          <span class="badge badge-red" style="font-size:.65rem; margin-left:6px;">LIMITED TIME OFFER</span>
+        </div>
+        <div class="room-specs">85m² • Panoramic Sea View • Infinity Pool Access</div>
+        <button class="room-details-btn" onclick="openRoomModal(1)">👁 Room details</button>
+      </div>
+      <div class="sleeps">
+        <span class="sleep-icon">👤</span><span class="sleep-icon">👤</span><span class="sleep-icon">👤</span><span class="sleep-icon">👤</span>
+      </div>
+      <div>
+        <div class="price-original">$1,295</div>
+        <div class="price-main">$862</div>
+        <div class="price-note">Includes taxes & fees</div>
+      </div>
+      <div>
+        <div class="option-item"><span class="option-icon">✅</span> Free Airport Transfer</div>
+        <div class="option-item"><span class="option-icon">✅</span> All-Inclusive Premium</div>
+        <div class="urgency red">Only 1 room left!</div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;">
+        <button class="btn btn-primary btn-sm" style="width:90px;" id="selectBtn-1"
+          onclick="selectRoom(1, '$862', 'Presidential Sea Front Suite')">Select</button>
+      </div>
+    </div>
+
+    <div class="room-row" id="room-2">
+      <div>
+        <div class="room-name-detail">Deluxe Garden View Room</div>
+        <div class="room-specs">32m² • Balcony • Garden View • 1 King Bed</div>
+        <button class="room-details-btn" onclick="openRoomModal(2)">👁 Room details</button>
+      </div>
+      <div class="sleeps">
+        <span class="sleep-icon">👤</span><span class="sleep-icon">👤</span>
+      </div>
+      <div>
+        <div class="price-original">$345</div>
+        <div class="price-main">$264</div>
+        <div class="price-note">Includes taxes & fees</div>
+      </div>
+      <div>
+        <div class="option-item"><span class="option-icon">✅</span> Free Cancellation</div>
+        <div class="option-item"><span class="option-icon">✅</span> Breakfast Included</div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;">
+        <button class="btn btn-primary btn-sm" style="width:90px;" id="selectBtn-2"
+          onclick="selectRoom(2, '$264', 'Deluxe Garden View Room')">Select</button>
+      </div>
+    </div>
+
+    <div class="room-row" id="room-3">
+      <div>
+        <div class="room-name-detail">Junior Suite with Private Pool</div>
+        <div class="room-specs">45m² • Private Pool • Sea View • King Bed</div>
+        <button class="room-details-btn" onclick="openRoomModal(3)">👁 Room details</button>
+      </div>
+      <div class="sleeps">
+        <span class="sleep-icon">👤</span><span class="sleep-icon">👤</span><span class="sleep-icon">🧒</span>
+      </div>
+      <div>
+        <div class="price-original">$626</div>
+        <div class="price-main">$445</div>
+        <div class="price-note">Includes taxes & fees</div>
+      </div>
+      <div>
+        <div class="option-item"><span class="option-icon">✅</span> Free Cancellation</div>
+        <div class="option-item"><span class="option-icon">✅</span> All-Inclusive</div>
+        <div class="urgency red">Only 2 rooms left!</div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;">
+        <button class="btn btn-primary btn-sm" style="width:90px;" id="selectBtn-3"
+          onclick="selectRoom(3, '$445', 'Junior Suite with Private Pool')">Select</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="container reviews-section">
+  <div class="reviews-header">
+    <h2 class="section-title" style="margin-bottom:0;">Guest Reviews</h2>
+    <a onclick="actionAlert('กำลังโหลดรีวิวจากผู้เข้าพัก 1,248 รายการ...')">Read all 1,248 reviews</a>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-top">
+        <div style="color:#F59E0B;font-size:.875rem;">★★★★★</div>
+        <span class="review-date">May 12, 2024</span>
+      </div>
+      <p class="review-text">"An absolute paradise. The views from the Presidential Suite are unmatched. The service was impeccable from start to finish."</p>
+      <div class="reviewer">
+        <div class="avatar avatar-purple">SM</div>
+        <div>
+          <div class="reviewer-name">Sophia Martinez</div>
+          <div class="reviewer-country">United Kingdom</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-top">
+        <div style="color:#F59E0B;font-size:.875rem;">★★★★★</div>
+        <span class="review-date">Apr 28, 2024</span>
+      </div>
+      <p class="review-text">"Excellent facilities and great breakfast selection. The private beach is beautiful, though the city center is a bit of a walk."</p>
+      <div class="reviewer">
+        <div class="avatar avatar-red">JW</div>
+        <div>
+          <div class="reviewer-name">James Wilson</div>
+          <div class="reviewer-country">United States</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-top">
+        <div style="color:#F59E0B;font-size:.875rem;">★★★★★</div>
+        <span class="review-date">Apr 15, 2024</span>
+      </div>
+      <p class="review-text">"The spa treatments were heavenly. Truly a five-star experience. We will definitely be coming back next summer."</p>
+      <div class="reviewer">
+        <div class="avatar avatar-orange">AK</div>
+        <div>
+          <div class="reviewer-name">Anna Kowalski</div>
+          <div class="reviewer-country">Germany</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo" style="cursor:pointer;" onclick="window.scrollTo({top:0, behavior:'smooth'})">T-Goda</div>
+        <p class="footer-desc">Making world travel accessible, affordable, and delightful for everyone since 2024. Your journey starts here.</p>
+      </div>
+      <div>
+        <div class="footer-heading">Company</div>
+        <ul class="footer-links">
+          <li><a onclick="actionAlert('เปิดหน้าเกี่ยวกับเรา')">About Us</a></li>
+          <li><a onclick="actionAlert('เปิดหน้าตำแหน่งงานว่าง')">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Support</div>
+        <ul class="footer-links">
+          <li><a onclick="actionAlert('ศูนย์ช่วยเหลือลูกค้า 24/7')">Support</a></li>
+          <li><a onclick="actionAlert('ดาวน์โหลดแอปพลิเคชันมือถือ')">Mobile App</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Legal</div>
+        <ul class="footer-links">
+          <li><a onclick="actionAlert('นโยบายความเป็นส่วนตัว')">Privacy Policy</a></li>
+          <li><a onclick="actionAlert('ข้อตกลงในการให้บริการ')">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2024 T-Goda Booking. All rights reserved.</p>
+      <div class="social-icons">
+        <div class="social-icon" onclick="actionAlert('ไปที่หน้า Facebook')">f</div>
+        <div class="social-icon" onclick="actionAlert('ไปที่หน้า LinkedIn')">in</div>
+        <div class="social-icon" onclick="actionAlert('ไปที่หน้า YouTube')">y</div>
+        <div class="social-icon" onclick="actionAlert('ไปที่หน้า Twitter')">tw</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLightboxOutside(event)">
+  <button class="lightbox-btn lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox-btn lightbox-prev" onclick="navigateLight(-1); event.stopPropagation();">‹</button>
+  <img class="lightbox-img" id="lightboxImg" src="" alt="" onclick="event.stopPropagation();" />
+  <button class="lightbox-btn lightbox-next" onclick="navigateLight(1); event.stopPropagation();">›</button>
+  <div class="lightbox-counter" id="lightboxCounter"></div>
+</div>
+
+<div class="modal" id="roomModal" onclick="closeModalOutside(event)">
+  <div class="modal-box" onclick="event.stopPropagation();">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <img class="modal-img" id="modalImg"
+      src="img/gallery-main.jpg" alt="Room" />
+    <h2 class="modal-title" id="modalTitle"></h2>
+    <p class="modal-specs" id="modalSpecs"></p>
+    <div class="modal-icons">
+      <div class="modal-icon-box"><span>🛏️</span>King Bed</div>
+      <div class="modal-icon-box"><span>👥</span><span id="modalSleeps"></span></div>
+    </div>
+    <div class="modal-includes">
+      <h4>Included in this room:</h4>
+      <ul id="modalOptions"></ul>
+    </div>
+    <div class="modal-footer">
+      <div>
+        <span class="modal-price-old" id="modalOldPrice"></span>
+        <span class="modal-price-main" id="modalPrice"></span>
+        <span class="modal-price-night"> / night</span>
+      </div>
+      <button class="btn btn-primary" onclick="selectFromModal()">Select Room</button>
+    </div>
+  </div>
+</div>
+
+<div class="signin-overlay" id="signinOverlay" onclick="closeSignInOutside(event)">
+  <div class="signin-box" onclick="event.stopPropagation();">
+    <button class="modal-close" onclick="closeSignIn()">✕</button>
+    <h2>Welcome back</h2>
+    <p>Sign in to your T-Goda account</p>
+    <button class="btn btn-google" onclick="actionAlert('กำลังเชื่อมต่อกับ Google...')">
+      <svg width="16" height="16" viewBox="0 0 24 24">
+        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
+        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+      </svg>
+      Continue with Google
+    </button>
+    <div class="divider">or</div>
+    <div class="form-group">
+      <label>Email address</label>
+      <input type="email" id="loginEmail" placeholder="you@example.com" />
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="••••••••" />
+    </div>
+    <div class="form-row">
+      <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
+        <input type="checkbox" style="width:auto" /> Remember me
+      </label>
+      <a onclick="actionAlert('ระบบกู้คืนรหัสผ่านจะส่งอีเมลหาคุณ')">Forgot password?</a>
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="performLogin()">Sign In</button>
+    <div class="signin-footer">Don't have an account? <a onclick="actionAlert('ไปยังหน้าลงทะเบียน')">Create one free</a></div>
+  </div>
+</div>
+
+
+<script>
+  /* ── Alerts for Unlinked Buttons ── */
+  let alertTimeout;
+  function actionAlert(msg) {
+    if(alertTimeout) clearTimeout(alertTimeout);
+    alertTimeout = setTimeout(() => alert(msg), 100);
+  }
+
+  /* ── Init date picker + map ── */
+  document.addEventListener('DOMContentLoaded', () => {
+    const cin  = sessionStorage.getItem('tgoda_checkin');
+    const cout = sessionStorage.getItem('tgoda_checkout');
+
+    new TgodaDatePicker({
+      trigger: '#hotelDateField',
+      display:  '#hotelDateDisplay',
+      initialIn:  cin  ? new Date(cin)  : new Date('2024-10-12'),
+      initialOut: cout ? new Date(cout) : new Date('2024-10-19'),
+      onSelect: (checkIn, checkOut) => {
+        sessionStorage.setItem('tgoda_checkin',  checkIn.toISOString());
+        sessionStorage.setItem('tgoda_checkout', checkOut.toISOString());
+        const nights = Math.round((checkOut - checkIn) / 86400000);
+        document.getElementById('hotelNightLabel').textContent = `Prices shown for ${nights} night${nights !== 1 ? 's' : ''}`;
+      }
+    });
+
+    // Grand Azure Resort & Spa — Elounda, Crete
+    TgodaMap.render('#hotelMapContainer', {
+      lat: 35.2577,
+      lng: 25.7269,
+      zoom: 14,
+      marker: { title: 'Grand Azure Resort & Spa' },
+      nearbySearch: 'restaurant',
+    });
+  });
+
+  /* ── DATA ── */
+  const images = [
+    'img/gallery-main.jpg',
+    'img/gallery-aerial.png',
+    'img/gallery-spa.png',
+  ];
+
+  const roomData = {
+    1: { name: 'Presidential Sea Front Suite', specs: '85m² • Panoramic Sea View • Infinity Pool Access', sleeps: 'Up to 4 guests', options: ['Free Airport Transfer', 'All-Inclusive Premium'], price: '$862', old: '$1,295' },
+    2: { name: 'Deluxe Garden View Room', specs: '32m² • Balcony • Garden View • 1 King Bed', sleeps: 'Up to 2 guests', options: ['Free Cancellation', 'Breakfast Included'], price: '$264', old: '$345' },
+    3: { name: 'Junior Suite with Private Pool', specs: '45m² • Private Pool • Sea View • King Bed', sleeps: 'Up to 3 guests', options: ['Free Cancellation', 'All-Inclusive'], price: '$445', old: '$626' },
+  };
+
+  let currentImg = 0, currentModalRoom = null, selectedRoom = null, saved = false;
+
+  /* ── Nav tabs ── */
+  function setTab(el) {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  /* ── Save ── */
+  function toggleSave() {
+    saved = !saved;
+    document.getElementById('saveBtn').textContent = saved ? '❤️ Saved' : '♡ Save';
+    if(saved) actionAlert('บันทึกโรงแรมลงในรายการโปรดแล้ว');
+  }
+
+  /* ── Scroll to rooms ── */
+  function scrollToRooms() {
+    document.getElementById('roomsSection').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  /* ── Amenities toggle ── */
+  function toggleAmenities() {
+    const el = document.getElementById('extraAmenities');
+    const arrow = document.getElementById('amenitiesArrow');
+    const txt = document.getElementById('amenitiesToggleText');
+    el.classList.toggle('visible');
+    arrow.textContent = el.classList.contains('visible') ? '▴' : '▾';
+    txt.textContent = el.classList.contains('visible') ? 'Show less' : 'See all 45 amenities';
+  }
+
+  /* ── Lightbox ── */
+  function openLightbox(idx) {
+    currentImg = idx; updateLightbox();
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+  function closeLightboxOutside(e) { if (e.target === document.getElementById('lightbox')) closeLightbox(); }
+  function navigateLight(dir) {
+    currentImg = (currentImg + dir + images.length) % images.length;
+    updateLightbox();
+  }
+  function updateLightbox() {
+    document.getElementById('lightboxImg').src = images[currentImg];
+    document.getElementById('lightboxCounter').textContent = `${currentImg + 1} / ${images.length}`;
+  }
+
+  /* ── Room selection ── */
+  function selectRoom(id, price, name) {
+    if (selectedRoom) {
+      document.getElementById(`room-${selectedRoom}`).classList.remove('selected');
+      const prevBtn = document.getElementById(`selectBtn-${selectedRoom}`);
+      prevBtn.textContent = 'Select';
+      prevBtn.classList.remove('btn-crimson'); prevBtn.classList.add('btn-primary');
+    }
+    selectedRoom = id;
+    document.getElementById(`room-${id}`).classList.add('selected');
+    const btn = document.getElementById(`selectBtn-${id}`);
+    btn.textContent = 'Selected ✓';
+    btn.classList.remove('btn-primary'); btn.classList.add('btn-crimson');
+    
+    // แจ้งเตือนเมื่อเลือกห้อง
+    actionAlert(`คุณได้เลือกห้อง ${name} ราคา ${price} เรียบร้อยแล้ว ระบบพร้อมดำเนินการชำระเงิน`);
+  }
+
+  /* ── Room modal ── */
+  function openRoomModal(id) {
+    currentModalRoom = id;
+    const r = roomData[id];
+    document.getElementById('modalTitle').textContent = r.name;
+    document.getElementById('modalSpecs').textContent = r.specs;
+    document.getElementById('modalSleeps').textContent = r.sleeps;
+    document.getElementById('modalPrice').textContent = r.price;
+    document.getElementById('modalOldPrice').textContent = r.old;
+    document.getElementById('modalOptions').innerHTML = r.options.map(o => `<li><span style="color:var(--green)">✅</span> ${o}</li>`).join('');
+    document.getElementById('roomModal').classList.add('open');
+  }
+  function closeModal() { document.getElementById('roomModal').classList.remove('open'); currentModalRoom = null; }
+  function closeModalOutside(e) { if (e.target === document.getElementById('roomModal')) closeModal(); }
+  function selectFromModal() {
+    if (currentModalRoom) { const r = roomData[currentModalRoom]; selectRoom(currentModalRoom, r.price, r.name); }
+    closeModal();
+  }
+
+  /* ── Sign In ── */
+  function openSignIn() { document.getElementById('signinOverlay').classList.add('open'); }
+  function closeSignIn() { document.getElementById('signinOverlay').classList.remove('open'); }
+  function closeSignInOutside(e) { if (e.target === document.getElementById('signinOverlay')) closeSignIn(); }
+  function performLogin() {
+    const email = document.getElementById('loginEmail').value;
+    const pass = document.getElementById('loginPass').value;
+    if(email && pass) {
+        alert('เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับกลับมา');
+        closeSignIn();
+    } else {
+        alert('กรุณากรอกอีเมลและรหัสผ่าน');
+    }
+  }
+
+  /* ── Keyboard ── */
+  document.addEventListener('keydown', e => {
+    if (document.getElementById('lightbox').classList.contains('open')) {
+      if (e.key === 'ArrowLeft') navigateLight(-1);
+      if (e.key === 'ArrowRight') navigateLight(1);
+      if (e.key === 'Escape') closeLightbox();
+    }
+    if (document.getElementById('roomModal').classList.contains('open') && e.key === 'Escape') closeModal();
+    if (document.getElementById('signinOverlay').classList.contains('open') && e.key === 'Escape') closeSignIn();
+  });
+</script>
+</body>
+</html> 

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>T-Goda – Hotels, Flights, Bundles & Activities</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <!-- ► Replace YOUR_GOOGLE_API_KEY with your real key (Maps JS + Places APIs must be enabled) -->
+  <script>window.TGODA_GOOGLE_API_KEY = 'YAIzaSyDoyHlnphzfK405yh7Ws1tLUR2Nt5JsYJk';</script>
+  <script src="tgoda-utils.js" defer></script>
+  <style>
+    @keyframes tgoda-shake {
+      0%,100% { transform: translateX(0); }
+      15%      { transform: translateX(-7px); }
+      30%      { transform: translateX(7px); }
+      45%      { transform: translateX(-5px); }
+      60%      { transform: translateX(5px); }
+      75%      { transform: translateX(-3px); }
+      90%      { transform: translateX(3px); }
+    }
+    .search-shake { animation: tgoda-shake .45s ease; }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-logo" onclick="window.location.href='index.html'" style="cursor:pointer;">T-<span>Goda</span></div>
+  <div class="nav-links">
+    <a href="crete-hotels.html" class="active">Hotels</a>
+    <a onclick="actionAlert('ฟีเจอร์จองเที่ยวบินกำลังมาเร็วๆ นี้!')">Flights</a>
+    <a onclick="actionAlert('แพ็คเกจที่พักพร้อมเที่ยวบินเร็วๆ นี้!')">Bundles</a>
+    <a onclick="actionAlert('กิจกรรมท่องเที่ยวรอบโลกกำลังปรับปรุงระบบ')">Activities</a>
+  </div>
+  <div class="nav-actions">
+    <button class="btn-ghost" onclick="openSignIn()">Sign In</button>
+    <button class="btn btn-primary" onclick="openSignIn()">Create Account</button>
+  </div>
+</nav>
+
+<div class="page active">
+  <div class="hero">
+    <img class="hero-img" src="img/hero.png" alt="Paradise Beach" onerror="this.src='https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Escape to Your Perfect<br>Paradise</h1>
+      <p>Unlock exclusive prices on over 2 million properties and flights across the globe.</p>
+      <div class="search-bar">
+        <input type="text" id="heroDestInput" placeholder="🔍  Where to next?" autocomplete="off" />
+        <div class="date-field" id="heroDateField">
+          <span>📅</span>
+          <span id="heroDateDisplay">Select dates</span>
+        </div>
+        <button id="heroSearchBtn" onclick="doHeroSearch()">🔍 Search</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🏷️</div>
+        <h3>Best Price Guarantee</h3>
+        <p>Find a lower price? We'll match it and give you a voucher for your next trip.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌐</div>
+        <h3>24/7 Global Support</h3>
+        <p>Our world-class support team is here to help you anywhere, anytime in 40+ languages.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <h3>Flexible Booking</h3>
+        <p>Life happens. Most of our properties offer free cancellation for peace of mind.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <h2>Trending Destinations</h2>
+        <p>Handpicked favorites for your next adventure</p>
+      </div>
+      <a class="view-all" href="crete-hotels.html">View all</a>
+    </div>
+    <div class="destinations-grid">
+      <div class="dest-card" onclick="window.location.href='crete-hotels.html'">
+        <div class="dest-img-wrap">
+          <img class="dest-img" src="img/bangkok.png" alt="Bangkok" onerror="this.src='https://images.unsplash.com/photo-1508009603885-247a505b2631?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'" />
+          <div class="dest-badge">TOP RATED</div>
+        </div>
+        <div class="dest-info">
+          <h4>Bangkok, Thailand</h4>
+          <p>Starting from <span>$120</span></p>
+        </div>
+      </div>
+      <div class="dest-card" onclick="window.location.href='crete-hotels.html'">
+        <div class="dest-img-wrap">
+          <img class="dest-img" src="img/tokyo.png" alt="Tokyo" onerror="this.src='https://images.unsplash.com/photo-1503899036084-c55cdd92da26?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'" />
+        </div>
+        <div class="dest-info">
+          <h4>Tokyo, Japan</h4>
+          <p>Starting from <span>$250</span></p>
+        </div>
+      </div>
+      <div class="dest-card" onclick="window.location.href='crete-hotels.html'">
+        <div class="dest-img-wrap">
+          <img class="dest-img" src="img/paris.png" alt="Paris" onerror="this.src='https://images.unsplash.com/photo-1502602898657-3e9076113c23?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'" />
+        </div>
+        <div class="dest-info">
+          <h4>Paris, France</h4>
+          <p>Starting from <span>$180</span></p>
+        </div>
+      </div>
+      <div class="dest-card" onclick="window.location.href='crete-hotels.html'">
+        <div class="dest-img-wrap">
+          <img class="dest-img" src="img/london.png" alt="London" onerror="this.src='https://images.unsplash.com/photo-1513635269975-5969336cd1bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'" />
+        </div>
+        <div class="dest-info">
+          <h4>London, UK</h4>
+          <p>Starting from <span>$210</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="promo-banner">
+    <div class="promo-bg-shape"></div>
+    <div class="promo-content">
+      <h2>Summer Sales: Up to<br>40% Off!</h2>
+      <p>Exclusive member deals on flights and luxury hotels for your next summer getaway. Valid until Oct 31st.</p>
+      <div class="promo-btns">
+        <button class="btn-outline-white" onclick="window.location.href='crete-hotels.html'">Explore Deals</button>
+        <button class="btn-white" onclick="openSignIn()">Join Club T-Goda</button>
+      </div>
+    </div>
+    <img src="img/promo-pool.png" alt="Pool" class="promo-image" onerror="this.src='https://images.unsplash.com/photo-1573843981267-be1999ff37cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'" />
+  </div>
+
+  <div class="newsletter">
+    <div class="newsletter-icon">✉️</div>
+    <h2>Get Travel Deals Directly</h2>
+    <p>Subscribe to our newsletter and get early access to hidden gems and seasonal discounts. No spam, only adventure.</p>
+    <div class="newsletter-form">
+      <input type="email" id="newsEmail" placeholder="Your email address" />
+      <button onclick="subscribeNews()">Subscribe Now</button>
+    </div>
+    <small>By subscribing, you agree to our Terms of Service and Privacy Policy</small>
+  </div>
+
+  <footer class="footer-light">
+    <div class="footer-brand">
+      <div class="nav-logo" style="font-size:18px; cursor:pointer;" onclick="window.scrollTo({top:0, behavior:'smooth'})">T-<span>Goda</span></div>
+      <p>Making world travel accessible, affordable, and delightful for everyone since 2024. Your journey starts here.</p>
+      <div class="footer-copy">© 2024 T-Goda Booking. All rights reserved.</div>
+      <div class="footer-social social-icons">
+        <div class="social-icon" onclick="actionAlert('ไปที่หน้า Facebook')">f</div>
+        <div class="social-icon" onclick="actionAlert('ไปที่หน้า Instagram')">📷</div>
+        <div class="social-icon" onclick="actionAlert('ไปที่หน้า Twitter (X)')">🐦</div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a onclick="actionAlert('เปิดหน้าเกี่ยวกับเรา')">About Us</a>
+      <a onclick="actionAlert('เปิดหน้าตำแหน่งงานว่าง')">Careers</a>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <a onclick="actionAlert('ศูนย์ช่วยเหลือลูกค้า 24/7')">Support</a>
+      <a onclick="actionAlert('ดาวน์โหลดแอปพลิเคชันมือถือ')">Mobile App</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a onclick="actionAlert('นโยบายความเป็นส่วนตัว')">Privacy Policy</a>
+      <a onclick="actionAlert('ข้อตกลงในการให้บริการ')">Terms of Service</a>
+    </div>
+  </footer>
+</div>
+
+<div class="signin-overlay" id="signinOverlay" onclick="closeSignInOutside(event)">
+  <div class="signin-box">
+    <button class="modal-close" onclick="closeSignIn()">✕</button>
+    <h2>Welcome back</h2>
+    <p>Sign in to your T-Goda account</p>
+    <button class="btn btn-google" onclick="actionAlert('กำลังเชื่อมต่อกับ Google...')">
+      <svg width="16" height="16" viewBox="0 0 24 24">
+        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
+        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+      </svg>
+      Continue with Google
+    </button>
+    <div class="divider">or</div>
+    <div class="form-group">
+      <label>Email address</label>
+      <input type="email" id="loginEmail" placeholder="you@example.com" />
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="••••••••" />
+    </div>
+    <div class="form-row">
+      <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
+        <input type="checkbox" style="width:auto" /> Remember me
+      </label>
+      <a onclick="actionAlert('ระบบกู้คืนรหัสผ่านจะส่งอีเมลหาคุณ')">Forgot password?</a>
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="performLogin()">Sign In</button>
+    <div class="signin-footer">Don't have an account? <a onclick="actionAlert('ไปยังหน้าลงทะเบียน')">Create one free</a></div>
+  </div>
+</div>
+
+<script>
+  let alertTimeout;
+  function actionAlert(msg) {
+    if(alertTimeout) clearTimeout(alertTimeout);
+    alertTimeout = setTimeout(() => alert(msg), 100);
+  }
+
+  function subscribeNews() {
+    const email = document.getElementById('newsEmail').value;
+    if(email) {
+        alert('ขอบคุณ! เราได้ส่งยืนยันการสมัครไปที่: ' + email);
+        document.getElementById('newsEmail').value = '';
+    } else {
+        alert('กรุณากรอกอีเมลของคุณ');
+    }
+  }
+
+  function openSignIn() { document.getElementById('signinOverlay').classList.add('open'); }
+  function closeSignIn() { document.getElementById('signinOverlay').classList.remove('open'); }
+  function closeSignInOutside(e) { if (e.target === document.getElementById('signinOverlay')) closeSignIn(); }
+  function performLogin() {
+    const email = document.getElementById('loginEmail').value;
+    const pass = document.getElementById('loginPass').value;
+    if(email && pass) {
+        alert('เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับกลับมา');
+        closeSignIn();
+    } else {
+        alert('กรุณากรอกอีเมลและรหัสผ่าน');
+    }
+  }
+
+  document.addEventListener('keydown', e => {
+    if (document.getElementById('signinOverlay').classList.contains('open') && e.key === 'Escape') closeSignIn();
+  });
+
+  /* ── Hero Search ── */
+  let heroSelectedPlace = null;
+  let heroPicker = null;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Date picker on the hero bar
+    heroPicker = new TgodaDatePicker({
+      trigger: '#heroDateField',
+      display: '#heroDateDisplay',
+      onSelect: (checkIn, checkOut) => {
+        sessionStorage.setItem('tgoda_checkin',  checkIn.toISOString());
+        sessionStorage.setItem('tgoda_checkout', checkOut.toISOString());
+      }
+    });
+
+    // Places autocomplete on the destination input
+    TgodaPlaces.attach('#heroDestInput', (place) => {
+      heroSelectedPlace = place;
+      sessionStorage.setItem('tgoda_dest', place.name || place.formatted_address);
+    });
+
+    // Enter key triggers search
+    document.getElementById('heroDestInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') doHeroSearch();
+    });
+  });
+
+  function doHeroSearch() {
+    const input = document.getElementById('heroDestInput');
+    const dest  = input.value.trim();
+
+    // Validate: destination required
+    if (!dest) {
+      input.focus();
+      // Shake the whole search bar
+      const bar = input.closest('.search-bar');
+      bar.classList.remove('search-shake');
+      void bar.offsetWidth; // reflow to restart animation
+      bar.classList.add('search-shake');
+      // Red border hint
+      input.style.outline = '2px solid #FF5A5F';
+      input.placeholder = '📍 Please enter a destination first';
+      setTimeout(() => {
+        input.style.outline = '';
+        input.placeholder = '🔍  Where to next?';
+      }, 2500);
+      return;
+    }
+
+    // Save search state
+    sessionStorage.setItem('tgoda_dest', dest);
+
+    // Build URL with query params for robustness
+    const cin  = sessionStorage.getItem('tgoda_checkin');
+    const cout = sessionStorage.getItem('tgoda_checkout');
+    const params = new URLSearchParams({ dest });
+    if (cin)  params.set('checkin',  cin);
+    if (cout) params.set('checkout', cout);
+
+    // Show loading state on button
+    const btn = document.getElementById('heroSearchBtn');
+    btn.textContent = '⏳ Searching…';
+    btn.disabled = true;
+
+    setTimeout(() => {
+      window.location.href = 'crete-hotels.html?' + params.toString();
+    }, 400);
+  }
+</script>
+</body>
+</html>

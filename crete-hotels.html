@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>T-Goda – Crete Hotels Search</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script>window.TGODA_GOOGLE_API_KEY = 'YAIzaSyDoyHlnphzfK405yh7Ws1tLUR2Nt5JsYJk';</script>
+  <script src="tgoda-utils.js" defer></script>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-logo" onclick="window.location.href='index.html'" style="cursor:pointer;">T-<span>Goda</span></div>
+  <div class="nav-links">
+    <a href="index.html" class="active">Hotels</a>
+    <a onclick="actionAlert('ฟีเจอร์จองเที่ยวบินกำลังมาเร็วๆ นี้!')">Flights</a>
+    <a onclick="actionAlert('แพ็คเกจที่พักพร้อมเที่ยวบินเร็วๆ นี้!')">Bundles</a>
+    <a onclick="actionAlert('กิจกรรมท่องเที่ยวรอบโลกกำลังปรับปรุงระบบ')">Activities</a>
+  </div>
+  <div class="nav-actions">
+    <button class="btn-ghost" onclick="openSignIn()">Sign In</button>
+    <button class="btn btn-primary" onclick="openSignIn()">Create Account</button>
+  </div>
+</nav>
+
+<div class="page active">
+  <div class="search-header">
+    <div class="search-header-inner">
+      <div class="search-field">
+        <span class="field-icon">📍</span>
+        <div>
+          <span class="field-label">Destination</span>
+          <span class="field-value" id="resultsDestDisplay">Crete, Greece</span>
+        </div>
+      </div>
+      <div class="search-field" id="resultsDateField" style="cursor:pointer;">
+        <span class="field-icon">📅</span>
+        <div>
+          <span class="field-label">Dates</span>
+          <span class="field-value" id="resultsDateDisplay">Oct 12 – Oct 19, 2024</span>
+        </div>
+      </div>
+      <div class="search-field">
+        <span class="field-icon">👤</span>
+        <div>
+          <span class="field-label">Travelers</span>
+          <span class="field-value">2 Adults, 1 Room</span>
+        </div>
+      </div>
+      <button class="update-btn" onclick="doUpdateSearch()">Update Search</button>
+    </div>
+  </div>
+
+  <div class="results-layout">
+    <div class="filters-panel">
+      <div class="filters-title">⚙️ Filters</div>
+      <div class="filter-section">
+        <h4>Price Range</h4>
+        <div class="price-range"><span>$0</span><span>$1000+</span></div>
+        <input type="range" class="range-slider" min="0" max="1000" value="700" oninput="actionAlert('ปรับช่วงราคาเป็น $' + this.value + '+', true)" />
+      </div>
+      <div class="filter-section">
+        <h4>Property Type</h4>
+        <div class="checkbox-item"><input type="checkbox" id="hotels" /><label for="hotels">Hotels</label></div>
+        <div class="checkbox-item"><input type="checkbox" id="resorts" checked /><label for="resorts">Resorts</label></div>
+        <div class="checkbox-item"><input type="checkbox" id="apts" /><label for="apts">Apartments</label></div>
+        <div class="checkbox-item"><input type="checkbox" id="villas" checked /><label for="villas">Villas</label></div>
+      </div>
+      <div class="filter-section">
+        <h4>Star Rating</h4>
+        <div class="checkbox-item"><input type="checkbox" id="5star" checked /><label for="5star">⭐⭐⭐⭐⭐</label></div>
+        <div class="checkbox-item"><input type="checkbox" id="4star" /><label for="4star">⭐⭐⭐⭐</label></div>
+      </div>
+      <div class="filter-section">
+        <h4>Facilities</h4>
+        <div class="checkbox-item"><input type="checkbox" id="wifi" checked /><label for="wifi">Free Wi-Fi</label></div>
+        <div class="checkbox-item"><input type="checkbox" id="pool" checked /><label for="pool">Swimming Pool</label></div>
+        <div class="checkbox-item"><input type="checkbox" id="gym" /><label for="gym">Fitness Center</label></div>
+        <div class="checkbox-item"><input type="checkbox" id="spa" /><label for="spa">Spa</label></div>
+      </div>
+      <div class="map-preview-sm" id="creteMapContainer" style="height:160px;border-radius:8px;overflow:hidden;margin-top:8px;">
+        <div style="height:100%;background:linear-gradient(135deg,#a8d5e2,#7ec8e3);display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;">Loading map…</div>
+      </div>
+      <div class="map-btn" style="margin-top:6px;cursor:pointer;" onclick="window.open('https://www.google.com/maps/search/hotels+in+Crete+Greece','_blank')">🗺️ Open full map</div>
+    </div>
+
+    <div class="results-main">
+      <div class="results-top">
+        <div class="results-count">245 properties in <span id="results-count-dest">Crete, Greece</span></div>
+        <select class="sort-select" onchange="actionAlert('จัดเรียงผลลัพธ์ตาม: ' + this.value)">
+          <option>Sort by: Recommended</option>
+          <option>Price: Low to High</option>
+          <option>Price: High to Low</option>
+          <option>Review Score</option>
+        </select>
+      </div>
+
+      <div class="flash-deals">
+        <div class="flash-header">
+          <span>⚡ Flash Deals for You</span>
+          <div class="countdown">
+            <span style="font-size:12px;color:#6B7280">Ends in:</span>
+            <div class="countdown-block" id="h">08</div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-block" id="m">45</div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-block" id="s">12</div>
+          </div>
+        </div>
+        
+        <div class="flash-item" onclick="goToHotel()">
+          <div class="flash-img-wrap">
+            <img class="flash-img" src="img/flash-uluwatu.png" alt="Mandala Sky" />
+            <div class="flash-badge">60% OFF</div>
+          </div>
+          <div class="flash-info">
+            <h4>Mandala Sky Luxury Villas ⭐⭐⭐⭐⭐</h4>
+            <p>📍 Elounda Bay • Cliff-top view</p>
+          </div>
+          <div class="flash-price">
+            <div class="original">$1,200</div>
+            <div class="price">$480<span class="night">/night</span></div>
+            <button class="claim-btn">Claim</button>
+          </div>
+        </div>
+        
+        <div class="flash-item" onclick="goToHotel()">
+          <div class="flash-img-wrap">
+            <img class="flash-img" src="img/flash-ubud.png" alt="Emerald Jungle" />
+            <div class="flash-badge">45% OFF</div>
+          </div>
+          <div class="flash-info">
+            <h4>Emerald Jungle Retreat ⭐⭐⭐⭐</h4>
+            <p>📍 Plaka • Private Sanctuary</p>
+          </div>
+          <div class="flash-price">
+            <div class="original">$450</div>
+            <div class="price">$247<span class="night">/night</span></div>
+            <button class="claim-btn">Claim</button>
+          </div>
+        </div>
+
+        <div class="flash-item" onclick="goToHotel()">
+          <div class="flash-img-wrap">
+            <img class="flash-img" src="img/flash-seminyak.png" alt="Seminyak Shores" />
+            <div class="flash-badge">35% OFF</div>
+          </div>
+          <div class="flash-info">
+            <h4>Seminyak Shores Club ⭐⭐⭐⭐⭐</h4>
+            <p>📍 Beachfront Bliss • Sea View</p>
+          </div>
+          <div class="flash-price">
+            <div class="original">$680</div>
+            <div class="price">$442<span class="night">/night</span></div>
+            <button class="claim-btn">Claim</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="hotel-card" onclick="goToHotel()">
+        <div class="hotel-card-img" style="height:200px">
+          <img src="img/hotel-azure.png" alt="Grand Azure" style="width:100%;height:100%;object-fit:cover;" />
+          <div class="top-choice-badge">🔵 Top Choice</div>
+        </div>
+        <div class="hotel-card-body">
+          <div class="hotel-card-left">
+            <div class="hotel-location">📍 Elounda Bay, Crete • Beachfront</div>
+            <h3>Grand Azure Resort & Spa ⭐⭐⭐⭐⭐</h3>
+            <div class="amenity-tags">
+              <span class="tag">📶 Free Wi-Fi</span>
+              <span class="tag">🏊 Pool</span>
+              <span class="tag">🍳 Breakfast</span>
+            </div>
+            <div class="urgency" style="color:var(--crimson)">Only 2 rooms left!</div>
+          </div>
+          <div class="hotel-card-right">
+            <div>
+              <div class="review-score">
+                <span class="score-text">Excellent</span>
+                <div class="score-badge">9.2</div>
+              </div>
+              <div class="review-count">1,248 reviews</div>
+            </div>
+            <div class="hotel-price">
+              <div class="original">$345</div>
+              <div class="price">$264<span class="night"> /night</span></div>
+              <button class="book-btn">Book Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hotel-card" onclick="goToHotel()">
+        <div class="hotel-card-img" style="height:200px">
+          <img src="img/hotel-lumina.png" alt="Lumina Beach" onerror="this.src='https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'" style="width:100%;height:100%;object-fit:cover;" />
+        </div>
+        <div class="hotel-card-body">
+          <div class="hotel-card-left">
+            <div class="hotel-location">📍 Chania, Crete • Beachfront</div>
+            <h3>Lumina Beach Villas ⭐⭐⭐⭐</h3>
+            <div class="amenity-tags">
+              <span class="tag">🏖️ Private Beach</span>
+              <span class="tag">💆 Spa</span>
+            </div>
+            <div class="cancellation">Free cancellation before Oct 10</div>
+          </div>
+          <div class="hotel-card-right">
+            <div>
+              <div class="review-score">
+                <span class="score-text">Exceptional</span>
+                <div class="score-badge" style="background:var(--green)">9.2</div>
+              </div>
+              <div class="review-count">856 reviews</div>
+            </div>
+            <div class="hotel-price">
+              <div class="price">$415<span class="night"> /night</span></div>
+              <button class="book-btn">Book Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hotel-card" onclick="goToHotel()">
+        <div class="hotel-card-img" style="height:200px">
+          <img src="img/hotel-palms.png" alt="Palms Sanctuary" onerror="this.src='https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'" style="width:100%;height:100%;object-fit:cover;" />
+        </div>
+        <div class="hotel-card-body">
+          <div class="hotel-card-left">
+            <div class="hotel-location">📍 Rethymno, Crete • 0.8 km from beach</div>
+            <h3>The Palms Sanctuary ⭐⭐⭐⭐</h3>
+            <div class="amenity-tags">
+              <span class="tag">🚌 Airport Shuttle</span>
+              <span class="tag">🏋️ Gym</span>
+            </div>
+            <div class="cancellation">Breakfast + Dinner deal available</div>
+          </div>
+          <div class="hotel-card-right">
+            <div>
+              <div class="review-score">
+                <span class="score-text">Great</span>
+                <div class="score-badge" style="background:#7C3AED">8.4</div>
+              </div>
+              <div class="review-count">2,102 reviews</div>
+            </div>
+            <div class="hotel-price">
+              <div class="price">$189<span class="night"> /night</span></div>
+              <button class="book-btn">Book Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pagination">
+        <button class="page-btn">‹</button>
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <button class="page-btn" style="width:auto;padding:0 10px">...</button>
+        <button class="page-btn">12</button>
+        <button class="page-btn">›</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer-light">
+    <div class="footer-brand">
+      <div class="nav-logo" style="font-size:18px; cursor:pointer;" onclick="window.location.href='index.html'">T-<span>Goda</span></div>
+      <p>Making world travel accessible, affordable, and delightful for everyone since 2024.</p>
+      <div class="footer-copy">© 2024 T-Goda Booking. All rights reserved.</div>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a onclick="actionAlert('เปิดหน้าเกี่ยวกับเรา')">About Us</a>
+      <a onclick="actionAlert('เปิดหน้าตำแหน่งงานว่าง')">Careers</a>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <a onclick="actionAlert('ศูนย์ช่วยเหลือลูกค้า 24/7')">Support</a>
+      <a onclick="actionAlert('ดาวน์โหลดแอปพลิเคชันมือถือ')">Mobile App</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a onclick="actionAlert('นโยบายความเป็นส่วนตัว')">Privacy Policy</a>
+      <a onclick="actionAlert('ข้อตกลงในการให้บริการ')">Terms of Service</a>
+    </div>
+  </footer>
+</div>
+
+<div class="signin-overlay" id="signinOverlay" onclick="closeSignInOutside(event)">
+  <div class="signin-box">
+    <button class="modal-close" onclick="closeSignIn()">✕</button>
+    <h2>Welcome back</h2>
+    <p>Sign in to your T-Goda account</p>
+    <div class="form-group">
+      <label>Email address</label>
+      <input type="email" id="loginEmail" placeholder="you@example.com" />
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="••••••••" />
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="performLogin()">Sign In</button>
+  </div>
+</div>
+
+<script>
+  let alertTimeout;
+  function actionAlert(msg, noDebounce = false) {
+    if(!noDebounce) {
+        if(alertTimeout) clearTimeout(alertTimeout);
+        alertTimeout = setTimeout(() => alert(msg), 100);
+    }
+  }
+
+  function goToHotel() { window.location.href = 'hotel.html'; }
+
+  /* ── Restore search state passed from index.html ── */
+  document.addEventListener('DOMContentLoaded', () => {
+    // Read from URL params first, fall back to sessionStorage
+    const urlParams = new URLSearchParams(window.location.search);
+    const dest = urlParams.get('dest') || sessionStorage.getItem('tgoda_dest') || 'Crete, Greece';
+    const cin  = urlParams.get('checkin')  || sessionStorage.getItem('tgoda_checkin');
+    const cout = urlParams.get('checkout') || sessionStorage.getItem('tgoda_checkout');
+
+    document.getElementById('resultsDestDisplay').textContent = dest;
+    document.getElementById('results-count-dest').textContent = dest;
+
+    // Date picker on the results bar
+    const resultsPicker = new TgodaDatePicker({
+      trigger: '#resultsDateField',
+      display: '#resultsDateDisplay',
+      initialIn:  cin  ? new Date(cin)  : new Date('2024-10-12'),
+      initialOut: cout ? new Date(cout) : new Date('2024-10-19'),
+      onSelect: (checkIn, checkOut) => {
+        sessionStorage.setItem('tgoda_checkin',  checkIn.toISOString());
+        sessionStorage.setItem('tgoda_checkout', checkOut.toISOString());
+      }
+    });
+
+    // Mini Google Map showing hotels near the destination
+    TgodaMap.render('#creteMapContainer', {
+      lat: 35.2641,
+      lng: 25.1577,
+      zoom: 9,
+      nearbySearch: 'lodging',
+    });
+  });
+
+  function doUpdateSearch() {
+    // In a real app this would re-query; here we just show the picker / refresh indication
+    document.getElementById('resultsDateField').click();
+  }
+
+  /* ── Countdown Timer ── */
+  let total = 8 * 3600 + 45 * 60 + 12;
+  function updateCountdown() {
+    const h = Math.floor(total / 3600);
+    const m = Math.floor((total % 3600) / 60);
+    const s = total % 60;
+    document.getElementById('h').textContent = String(h).padStart(2, '0');
+    document.getElementById('m').textContent = String(m).padStart(2, '0');
+    document.getElementById('s').textContent = String(s).padStart(2, '0');
+    if (total > 0) total--;
+  }
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+
+  function openSignIn() { document.getElementById('signinOverlay').classList.add('open'); }
+  function closeSignIn() { document.getElementById('signinOverlay').classList.remove('open'); }
+  function closeSignInOutside(e) { if (e.target === document.getElementById('signinOverlay')) closeSignIn(); }
+</script>
+</body>
+</html>
